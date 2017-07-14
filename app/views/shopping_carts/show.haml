@@ -1,0 +1,74 @@
+.container
+  .card.white.big-padding.top-space
+
+    -if @shopping_cart.products.blank?
+      %h2 Tu carrito aun no tiene productos
+
+    -else
+      %h1.text-center Carrito de compras
+      %table.table.table-hover
+        %thead
+          %tr
+            %td
+              Producto
+            %td
+              Precio unitario
+            %td
+              Cantidad
+            %td
+              Total del producto
+            %td
+        %tbody
+          -@shopping_cart.products.each.with_index do |product, i|
+            %tr
+              %td= product.title
+              %td
+                $
+                = product.pricing
+                %div.unit{id: "unit_#{@shopping_cart.in_shopping_carts[i].id}", style: "display: none;"}= product.pricing
+
+              %td
+                =number_field_tag :quantity, @shopping_cart.in_shopping_carts[i].quantity, min: 1, onchange:"$.ajax({url: \"#{update_in_shopping_cart_path}\", method: \"PUT\", data: {in_shopping_cart: #{@shopping_cart.in_shopping_carts[i].id}, quantity: this.value}, dataType: 'script'})", id: "quantity_#{@shopping_cart.in_shopping_carts[i].id}", class: "quantity"
+
+              %td
+                $
+                %span.product_total{id:"productTotal_#{@shopping_cart.in_shopping_carts[i].id}"}= (product.pricing * @shopping_cart.in_shopping_carts[i].quantity)
+              %td= link_to "Eliminar", remove_in_shopping_carts_product_path(id: @shopping_cart.in_shopping_cart_ids[i]), method: :delete, class:"red-text"
+
+
+
+
+
+          %tr
+            %td
+              %strong Subtotal:
+
+            %td
+              %strong
+                $
+                %span#subtotal= @shopping_cart.subtotal
+
+          %tr
+            %td
+              Envio:
+            %td#delivery
+              -if @shopping_cart.subtotal >= 1000
+                Gratis
+
+              -else
+                + $150
+
+          %tr
+            %td
+              %strong Total:
+
+            %td
+              %strong
+                $
+                %span#total= @shopping_cart.total
+      .center-xs
+        %span.bigger.text-center Pagar
+        %br
+        =link_to check_out_path, class:"btn teal", method: :post do
+          Pagar con
+          =image_tag "paypal_logo_small", width: 75

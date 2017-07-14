@@ -1,0 +1,52 @@
+// Place all the styles related to the products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.truncated{
+    overflow: hidden;
+    display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.big{
+  font-size: 1.5em;
+}
+
+.inline-block{
+  display: inline-block;
+}
+
+.hidden{
+  display: none;
+}
+
+.images-previews{
+  margin: 5px;
+  border: 1px solid black;
+  &:hover{
+    box-shadow: 0 0 2px 2px red;
+    border: 1px transparent;
+    cursor: pointer;
+  }
+}
+
+.products-images{
+  &:hover{
+    cursor: zoom-in;
+  }
+}
+
+.square{
+  width: 40px;
+  height: 40px;
+}
+
+.top-space{
+  margin-top: 1em;
+}
+
+.bottom-space{
+  margin-bottom: 1em;
+}

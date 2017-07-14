@@ -1,0 +1,27 @@
+.row.center-xs
+  .col-xs-12.col-md-10.col-lg-8
+    .box
+      .card.big-padding
+        %h2 Crear nueva contraseña
+
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put}) do |f|
+          = devise_error_messages!
+          =f.hidden_field :reset_password_token
+
+          .form-group
+            -if @minimum_password_length
+              %em
+              (
+              =@minimum_password_length
+              carácteres minimo
+              )
+
+            = f.password_field :password, auofocus: true, autocomplete: "off", class:"form-control floating-label", placeholder: "Nueva contraseña"
+
+          .form-group
+            =f.password_field :password_confirmation, autocomplete: "off", class:"form-control floating-label", placeholder: "Confirma tu contraseña"
+
+          .form-group
+            = f.submit "Cambiar mi contraseña", class:"btn btn-success"
+
+          =render "devise/shared/links"

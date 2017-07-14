@@ -1,0 +1,19 @@
+.row.center-xs
+  .col-xs-12.col-md-10.col-lg-8
+    .box
+      .card.big-padding
+        %h2 Iniciar sesion
+
+        = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          = devise_error_messages!
+
+          .form-group.label-floating
+            = f.email_field :email, auofocus: true, class:"form-control floating-label", placeholder: "Correo electronico"
+
+          .form-group.label-floating
+            =f.password_field :password, autocomplete: "off", class:"form-control floating-label", placeholder:"Contraseña (#{@minimum_password_length} caracteres minimo)"
+
+          .form-group
+            = f.submit "Iniciar sesion", class:"btn btn-info"
+
+          =render "devise/shared/links"

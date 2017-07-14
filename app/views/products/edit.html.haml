@@ -1,0 +1,10 @@
+
+.row.center-xs
+  .col-xs-11.col-md-10
+    .card.top-space
+      %h1.text-center Editing product
+      = render 'form'
+      .center-xs
+        = link_to 'Show', @product
+        \|
+        = link_to 'Back', products_path

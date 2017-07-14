@@ -1,0 +1,11 @@
+
+.green.big-padding.no-margin
+  %h2.text-center Ultimos productos
+.row.center-xs.light-blue.big-padding
+  .col-xs-10
+    .box
+      #galeria
+        .inner
+          -@products.order("created_at DESC").limit(5).each do |prod|
+            -if prod.avatars.any?
+              .image{style:"background-image: url('#{url_to_image(prod.avatars.first.image.url)}');", onclick:"window.location.replace('#{product_path(id: prod.id)}')"}

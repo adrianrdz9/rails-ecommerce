@@ -1,0 +1,25 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#galeria{
+    width: 100%;
+    overflow-x: hidden;
+    .inner{
+        white-space: nowrap;
+        position: relative;
+        left: 0;
+        transition: left 1.5s;
+    }
+    .image{
+        display: inline-block;
+        margin-right: -4px;
+        height:40vh;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        &:hover{
+          cursor: pointer;
+        }
+    }
+}

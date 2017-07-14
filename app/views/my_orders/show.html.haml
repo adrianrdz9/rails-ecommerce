@@ -1,0 +1,114 @@
+/-raise @order
+
+.row.center-xs
+  .col-xs-11.col-md-10.col-lg-9
+    .box.card.teal.white-text
+      %h1
+        Compra del
+        =@order.created_at.in_time_zone(Time.now.utc_offset).day
+        \/
+        =@order.created_at.in_time_zone(Time.now.utc_offset).mon
+        \/
+        =@order.created_at.in_time_zone(Time.now.utc_offset).year
+        a las
+        =@order.created_at.in_time_zone(Time.now.utc_offset).hour
+        \:
+        =@order.created_at.in_time_zone(Time.now.utc_offset).min
+
+      %span.big
+        Tu link de compra permanente es:
+        %br
+        =link_to my_order_url(id: @order.permanent_link)
+
+      %br
+      %h2
+        Total de la compra: $
+        -if @order.total != @order.shopping_cart.products.sum("pricing")
+          =@order.shopping_cart.subtotal
+          + envio de $
+          =@order.shopping_cart.total - @order.shopping_cart.subtotal
+        -else
+          =@order.shopping_cart.total
+          + envio gratis
+
+
+
+      %br
+      .row.center-xs
+        .col-xs-11.col-md-10.col-lg-9
+          .list-group
+            -@order.shopping_cart.products.each.with_index do |product, i|
+              .list-group-item
+                .row-picture
+                  =image_tag product.avatars.any? ? product.avatars.first.image.url : "missing", class:"circle", alt: "icon"
+                .row-content
+                  %h4.list-group-item-heading
+                    = product.title
+                    (cantidad:
+                    =@order.shopping_cart.in_shopping_carts[i].quantity || ""
+                    )
+                  %p.list-group-item-text= product.description || ""
+                  %span
+                    $
+                    =product.pricing
+                    MXN
+
+              .list-group-separator
+          %br
+          %h3.medium.black-text
+            Datos de envio
+          %table.table
+            %thead
+              %tr
+                %td
+                  Concepto
+                %td
+                  Dato
+
+            %tbody
+              %tr
+                %td
+                  Nombre de quien recibe
+                %td
+                  =@order.recipient_name
+
+              %tr
+                %td
+                  Calle 1
+                %td
+                  =@order.line1
+
+              %tr
+                %td
+                  Calle 2
+                %td
+                  =@order.line2
+
+              %tr
+                %td
+                  Ciudad
+                %td
+                  =@order.city
+
+              %tr
+                %td
+                  Pais
+                %td
+                  =@order.country_code
+
+              %tr
+                %td
+                  Codigo postal
+                %td
+                  =@order.postal_code
+
+              %tr
+                %td
+                  Estado
+                %td
+                  =@order.state
+
+          %p.medium
+            Si hay algun error en tu direccion de envio contactanos a a@a.a con asunto "Direccion de envio incorrecta", incluyendo tu id de compra (
+            =@order.permanent_link
+            ) y tu direccion correcta lo antes posible

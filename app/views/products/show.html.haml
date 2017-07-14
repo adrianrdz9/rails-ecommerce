@@ -1,0 +1,49 @@
+.row.center-xs.top-space.bottom-space
+  .col-xs-11.col-md-9.text-justify
+    .card.big-padding
+      %h1.text-center= @product.title
+      .row
+        .col-xs-12.col-md-6
+          .box
+            .row
+              -if @product.avatars.any?
+                .col-xs-12.col-md-2
+                  .box
+                    -@product.avatars.each.with_index do |avatar, i|
+                      =image_tag avatar.image.url(:thumb), class:"inline-block images-previews square", id: "prev-#{i}"
+                .col-xs-12.col-md-10.center-xs
+                  .box
+                    -@product.avatars.each.with_index do |avatar, i|
+                      %a.lightbox-image{href:"#{image_url(avatar.image.url(:medium))}"}
+                        =image_tag avatar.image.url(:medium), class:"inline-block hidden products-images", id:"img-#{i}"
+              -else
+                .col-xs-2
+                  .box
+                    =image_tag "missing", class:"inline-block images-previews square", id: "prev-#{0}"
+                .col-xs-10.center-xs
+                  .box
+                    =image_tag "missing", class:"inline-block hidden products-images", id:"img-#{0}"
+
+
+
+        .col-xs-12.col-md-6
+          .box
+            %span.responsive
+              Precio:
+              %strong.red-text
+                $
+                ='%.2f' % @product.pricing
+              -if @product.pricing >= 500
+                %strong Envio gratis.
+              -else
+                Pueden aplicarse
+                %strong cargos por envio.
+            %br
+            %span.responsive Descripción:
+            %br
+            %p.responsive.inline-block=  @product.description.gsub(/\n/, '<br>').gsub("bold{", "<strong>").gsub("}bold", "</strong>").html_safe()
+
+      .row
+        .col-xs-8.col-xs-offset-2.col-md-6.col-md-offset-5.col-lg-4.col-lg-offset-7
+          .box
+            =link_to "Agregar al carrito", add_to_shopping_cart_path(product_id: @product.id), method: :post, class:"btn btn-success"

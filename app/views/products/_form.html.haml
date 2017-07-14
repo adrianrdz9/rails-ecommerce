@@ -1,0 +1,53 @@
+= form_for @product, html: { multipart: true } do |f|
+  - if @product.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
+      %ul
+        - @product.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row.big-padding
+    .col-xs-12.col-md-8
+      .box
+        .form-group
+          = f.text_field :title, class:"form-control floating-label", placeholder: "Título"
+
+    .col-xs-12.col-md-4
+      .box
+        .form-group
+          .input-group
+            %span.input-group-addon $
+            = f.number_field :pricing, class:"form-control floating-label", placeholder: "Costo", step: 1
+            %span.input-group-addon MXN
+
+    .col-xs-6
+      .box
+        .form-group
+          .input-group
+            %span.input-group-addon Stock
+            = f.number_field :stock, class:"form-control floating-label", placeholder: "Stock", step: 1
+
+
+    .col-xs-6
+      .box
+        .form-group
+          .input-group
+            %span.input-group-addon Cateoria
+            = f.select :category, [],{}, {placeholder: "Categoria", class:"form-control"} do
+              =Category.all.each do |cat|
+                %option{value: cat.name}= cat.name
+
+    .col-xs-12
+      .box
+        .form-group
+          = f.text_area :description, class:"form-control big-padding floating-label", placeholder:"Descripción", rows:"15"
+
+    .col-xs-12.center-xs
+      .box
+        .form-group
+          = label_tag "images[]", class:"btn btn-inverse" do
+            Seleccionar imagenes
+          = file_field_tag "images[]", class:"hidden", multiple: true
+    .col-xs-12.center-xs
+      .box
+        = f.submit "Guardar", class:"btn btn-info"

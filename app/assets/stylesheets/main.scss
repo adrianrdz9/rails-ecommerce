@@ -1,0 +1,40 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.responsive{
+  @media screen and (max-width: 700px) {
+    font-size: 16px;
+  }
+
+
+
+  @media screen and (min-width: 701px) {
+    font-size: 18px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    font-size: 20px;
+  }
+}
+
+img{
+  max-width: 100%;
+}
+
+.big-padding{
+  padding: 1em;
+}
+
+.no-margin{
+  margin: 0;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.bolder{
+  font-weight: bolder;
+}

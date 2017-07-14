@@ -1,0 +1,19 @@
+.container
+  .row.center-xs
+    -@products.each do |product|
+      .col-xs-12.col-md-6.col-lg-4.top-space
+        .box
+          .thumbnail
+            -if product.avatars.any?
+              =image_tag product.avatars.first.image.url(:medium), class:"top-space"
+            -else
+              =image_tag "missing", class:"top-space"
+            .caption
+              %h3= product.title
+              %span
+                $
+                =product.pricing
+              %p.truncated.text-justify.responsive= product.description.gsub(/\n/, '<br>').html_safe()
+              %p
+                =link_to "Agregar al carrito", add_to_shopping_cart_path(product_id: product.id), method: :post, class:"btn btn-success"
+                =link_to "Ver mas...", product_path(id: product.id), class:"btn btn-info"

@@ -1,0 +1,98 @@
+!!! 5
+%html
+  %head
+    %title Ecommerce
+    = csrf_meta_tags
+    %link{rel:"stylesheet", href:"//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css", type:"text/css"}
+    %link{href:"https://fonts.googleapis.com/icon?family=Material+Icons", rel:"stylesheet"}
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+
+  %header
+    -if !alert.nil?
+      .alert.alert-warning.alert-dismissible.no-margin{role:"alert"}
+        %button.close{type:"button", data:{dismiss:"alert"}, aria:{label: "Close"} }
+          %span{aria:{hidden:"true"}} &times;
+        %strong= alert
+
+    -if !notice.nil?
+      .alert.alert-info.alert-dismissible.no-margin{role:"alert"}
+        %button.close{type:"button", data:{dismiss:"alert"}, aria:{label: "Close"} }
+          %span{aria:{hidden:"true"}} &times;
+        %strong= notice
+
+    .navbar.navbar-inverse.no-margin
+      .container-fluid
+        .navbar-header
+          %button{type:"button", class:"navbar-toggle", data:{toggle:"collapse", target:".navbar-inverse-collapse"}}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+
+          %a.navbar-brand{href: root_path} Tienda
+
+        .navbar-collapse.collapse.navbar-inverse-collapse
+          -if user_signed_in? && !current_user.client?
+            %ul.nav.navbar-nav
+              %li{:class => ("active" if request.path == root_path)}
+                %a{href: root_path} Panel principal
+              %li{:class => ("active" if request.path == products_path)}
+                %a{href: products_path} Productos
+              %li{:class => ("active" if request.path == categories_path)}
+                %a{href: categories_path} Categorias
+          -else
+            %ul.nav.navbar-nav
+              %li{:class => ("active" if request.path == root_path)}
+                %a{href: root_path} Inicio
+              %li{:class => ("active" if request.path == categories_path)}
+                %a{href: categories_path} Categorias
+              %li.dropdown
+                %a.dropdown-toggle{href:"index.html", data: {target:"#", toggle:"dropdown"}}
+                  Productos
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{href:products_path} Todos los productos
+                  %li
+                    %a{href:products_path} Lo mas vendido
+                  %li
+                    %a{href:products_path} Lo mas nuevo
+                  %li.divider
+                  %li
+                    %a{href:"javascript:void(0)"} Estilo 1
+                  %li
+                    %a{href:"javascript:void(0)"} Estilo 2
+
+              =form_tag search_path, class:"navbar-form navbar-left", method: :post do
+                .form-group
+                  =text_field_tag "search", nil, class:"form-control", placeholder: "buscar"
+
+
+          %ul.nav.navbar-nav.navbar-right
+            %li
+              =link_to carrito_path do
+                Carrito
+                (
+                =@shopping_cart.in_shopping_carts.count
+                )
+            -if user_signed_in?
+              %li.dropdown
+                %a.dropdown-toggle{href:"index.html", data: {target:"#", toggle:"dropdown"}}
+                  Mi cuenta
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    =link_to "Editar cuenta", edit_user_registration_path
+                  %li
+                    =link_to "Cerrar sesion", destroy_user_session_path, method: :delete
+            -else
+              %li
+                =link_to "Iniciar sesion", new_user_session_path
+              %li
+                =link_to "Crear cuenta", new_user_registration_path
+
+
+
+  %body
+    = yield

@@ -1,0 +1,38 @@
+.container
+  .row.center-xs.card
+    .col-xs-12
+      .box
+        %h2 Editar mi cuenta
+    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+      = devise_error_messages!
+      .col-xs-12
+        .box
+          .form-group
+            = f.email_field :email, autofocus: true, placeholder: "Correo electronico", class:"form-control  floating-label"
+      .col-xs-12
+        .box
+          .form-group
+            = f.password_field :password, autocomplete: "off", placeholder:"Nueva contraseña (dejar el blanco si no quieres cambiarla)", class:"form-control floating-label"
+      .col-xs-12
+        .box
+          .form-group
+            = f.password_field :password_confirmation, autocomplete: "off", placeholder:"Confirma tu contraseña", class:"form-control floating-label"
+      .col-xs-12
+        .box
+          .form-group
+            = f.password_field :current_password, autocomplete: "off", placeholder:"Ingresa tu contraseña actual para verificar tus cambios", class:"form-control floating-label"
+      .col-xs-12
+        .box
+          .form-group
+            = f.submit "Actualizar", class:"btn btn-warning"
+
+    .col-xs-12.center.xs
+      .box
+        %h3 Cancelar mi cuenta
+    .col-xs-12.center.xs
+      .box
+        %p
+          ¿Insatisfecho?
+          =button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger"
+
+    = link_to "Back", :back

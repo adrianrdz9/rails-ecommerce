@@ -1,0 +1,67 @@
+.row.center-xs.top-space
+  .col-xs-11
+    .box
+      .row
+        .col-xs-12.col-md-12.col-lg-4.teal.white-text{style:"padding: 1em;"}
+          .box
+            .row
+              .col-xs-8
+                .box
+                  %h2
+                    Products
+              .col-xs-4
+                .box
+                  %a.btn.btn-success.btn-fab{href: new_product_path}
+                    %i.material-icons add
+
+
+              .col-xs-12
+                .box
+                  %table.table.table-stripped
+                    %thead
+                      %tr
+                        %th Product
+                        %th.text-center Stock
+                        %th
+                    %tbody
+                      -@products.each do |product|
+                        %tr
+                          %td.text-left= product.title
+                          %td.text-center= product.stock
+                          %td.lext-right
+                            = link_to "Editar", edit_product_path(id: product.id), class:"lighter-blue-text bold"
+        .col-xs-12.col-md-12.col-lg-8.dark-blue.white-text{style:"padding: 1em;"}
+          .box
+            .row
+              .col-xs-12.col-md-6.col-lg-12
+                .box
+                  %h2
+                    Incomplete orders
+
+
+                  .panel-group#incompleted_orders{role: "tablist", aria:{multiselectable: true}}
+                    -@orders.where("status = ?", 0).each do |order|
+                      .panel
+                        %a{role: "button", data: {toggle: "collapse", parent:"#incompleted_orders"}, aria:{expanded: "false", controls: "collapse_incompleted_#{order.id}"}, href: "#collapse_incompleted_#{order.id}"}
+                          .panel-heading.light-blue.white-text{role: "tab", id: "heading_incompleted_#{order.id}"}
+                            %span.panel-title
+                              =order.recipient_name
+                        .panel-collapse.collapse{id: "collapse_incompleted_#{order.id}", role:"tabpanel", aria:{labelledby: "heading_incompleted_#{order.id}"}}
+                          .panel-body.lighter-blue.black-text
+                            =order.permanent_link
+
+              .col-xs-12.col-md-6.col-lg-12
+                .box
+                  %h2
+                    Completed orders
+
+                  .panel-group#completed_orders{role: "tablist", aria:{multiselectable: true}}
+                    -@orders.where("status = ?", 1).each do |order|
+                      .panel
+                        %a{role: "button", data: {toggle: "collapse", parent:"#completed_orders"}, aria:{expanded: "false", controls: "collapse_completed_#{order.id}"}, href: "#collapse_completed_#{order.id}"}
+                          .panel-heading.light-blue.white-text{role: "tab", id: "heading_completed_#{order.id}"}
+                            %span.panel-title
+                              =order.recipient_name
+                        .panel-collapse.collapse{id: "collapse_completed_#{order.id}", role:"tabpanel", aria:{labelledby: "heading_completed_#{order.id}"}}
+                          .panel-body.lighter-blue.black-text
+                            =order.permanent_link

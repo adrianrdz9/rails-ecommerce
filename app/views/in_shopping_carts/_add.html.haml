@@ -1,0 +1,3 @@
+= form_tag add_to_shopping_cart_path, method: :post, class: "add-to-cart" do
+  = hidden_field_tag "product_id", product.id
+  = submit_tag "Agregar al carrito", class:"btn btn-success"

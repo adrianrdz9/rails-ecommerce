@@ -1,0 +1,27 @@
+%h1.text-center= @category.name.capitalize
+.center-xs
+  =link_to "Regresar", categories_path, class:"btn btn-link indigo-text"
+.row.center-xs
+  .col-xs-11
+    .box
+      .row.center-xs
+        -if !@products.empty?
+          -@products.each do |product|
+            .col-xs-12-col-md-6.col-lg-4
+              .box
+                .thumbnail
+                  -if product.avatars.any?
+                    =image_tag product.avatars.first.image.url(:medium), class:"top-space"
+                  -else
+                    =image_tag "missing", class:"top-space"
+                  .caption
+                    %h3= product.title
+                    %span
+                      $
+                      =product.pricing
+                    %p.truncated.text-justify.responsive= product.description.gsub(/\n/, '<br>').html_safe()
+                    %p
+                      =link_to "Agregar al carrito", add_to_shopping_cart_path(product_id: product.id), method: :post, class:"btn btn-success"
+                      =link_to "Ver mas...", product_path(id: product.id), class:"btn btn-info"
+        -else
+          %span.bigger Upss parece que aun no hay ningun producto en esta categoria

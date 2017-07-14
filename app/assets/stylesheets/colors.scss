@@ -1,0 +1,26 @@
+$colors : (
+    red: #FC4349,
+    pink: #E4004F,
+    blue: #335e86,
+    green: #16a085,
+    dark-blue: #405699,
+    grey: #D7DADB,
+    dark-grey: #666,
+    darker-grey: #2f2f2f,
+    light-blue: #3498DB,
+    lighter-blue: #a5d0ec,
+    white: #fff,
+    indigo: #2F33AC,
+    black: #111,
+    teal: #33b894
+);
+
+@each $color_name, $color in $colors{
+    .#{$color_name}{
+        background-color: $color !important;
+    }
+
+    .#{$color_name}-text{
+        color: $color !important;
+    }
+}

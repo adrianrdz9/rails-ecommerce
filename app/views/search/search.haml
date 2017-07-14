@@ -1,0 +1,25 @@
+.row.center-xs.top-space
+  .col-xs-11.col-md-10.col-lg-9
+    .box
+      =form_tag "/search", method: :post do
+        =text_field_tag "search", @search, class:"form-control", placeholder: "Busqueda"
+        = submit_tag "Buscar", class:"btn btn-info center-xs"
+
+
+      %strong.big
+        Resultados (
+        =@results.count
+        ):
+      .row
+        -@results.each do |result|
+          .col-xs-12.col-md-6.col-lg-4
+            .box
+              .thumbnail
+                =image_tag result.avatars.blank? ? "missing" : result.avatars.first.image.url
+
+                .camtion
+                  %h3= result.title
+                  %p.truncated= result.description
+                  %p
+                    =link_to "Ver mas...", product_path(id: result.id), class:"btn btn-success"
+                    =link_to "Agregar al carrito", add_to_shopping_cart_path(product_id: result.id), method: :post, class:"btn btn-info"

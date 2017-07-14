@@ -1,0 +1,10 @@
+.row.center-xs
+  .col-xs-11.col-md-10.col-lg-9
+    .box
+      .panel.panel-info
+        .panel-heading
+          %h1.panel-title Categorias
+        -@categories.each do |category|
+          =link_to category_path(name: category.name), class:"btn", style:"margin: 0; width: 100%; border-bottom: 1px solid grey;" do
+            .panel-body
+              %h2.responsive{style:"margin: 0;"}= category.name
